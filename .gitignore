@@ -1,2 +1,5 @@
 *bin
 *obj
+*appsettings.Development.local.json
+README.MD
+GroomerManager.Infrastructure/Migrations
