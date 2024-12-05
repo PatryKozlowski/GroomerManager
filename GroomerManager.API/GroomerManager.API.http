@@ -1,0 +1,6 @@
+@GroomerManager.API_HostAddress = http://localhost:3000
+
+GET {{GroomerManager.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

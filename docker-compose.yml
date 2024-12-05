@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  groomermanager-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080" # Mapowanie portu hosta na port kontenera
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=groomermanager
+    depends_on:
+      - db
+    networks:
+      - groomer-network
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: groomermanager
+    ports:
+      - "5432:5432" # PostgreSQL dostępny na porcie 5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - groomer-network
+
+networks:
+  groomer-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerManager.Application", "GroomerManager.Application\GroomerManager.Application.csproj", "{2015E023-1720-457A-AC61-31711672A00C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerManager.API", "GroomerManager.API\GroomerManager.API.csproj", "{0BDED66B-04C9-49F1-9CDE-886D11D79145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerManager.Domain", "GroomerManager.Domain\GroomerManager.Domain.csproj", "{BF5D47B3-E1B5-4830-B850-D8EC8A9D8EF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerManager.Infrastructure", "GroomerManager.Infrastructure\GroomerManager.Infrastructure.csproj", "{C88CB8C8-3393-4318-8359-21E5E0D57E06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2015E023-1720-457A-AC61-31711672A00C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2015E023-1720-457A-AC61-31711672A00C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2015E023-1720-457A-AC61-31711672A00C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2015E023-1720-457A-AC61-31711672A00C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDED66B-04C9-49F1-9CDE-886D11D79145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDED66B-04C9-49F1-9CDE-886D11D79145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDED66B-04C9-49F1-9CDE-886D11D79145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDED66B-04C9-49F1-9CDE-886D11D79145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF5D47B3-E1B5-4830-B850-D8EC8A9D8EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF5D47B3-E1B5-4830-B850-D8EC8A9D8EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF5D47B3-E1B5-4830-B850-D8EC8A9D8EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF5D47B3-E1B5-4830-B850-D8EC8A9D8EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88CB8C8-3393-4318-8359-21E5E0D57E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88CB8C8-3393-4318-8359-21E5E0D57E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88CB8C8-3393-4318-8359-21E5E0D57E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88CB8C8-3393-4318-8359-21E5E0D57E06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
