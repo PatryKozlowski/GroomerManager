@@ -1,9 +1,13 @@
 using GroomerManager.API.Auth;
+using GroomerManager.API.Endpoints;
+using GroomerManager.API.Exception;
 using GroomerManager.Application;
 using GroomerManager.Application.Interfaces;
 using GroomerManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -13,14 +17,16 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApplication();
+    builder.Services.AddApplication();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.Configure<CookieSettings>(builder.Configuration.GetSection("CookieSettings"));  
+builder.Services.Configure<CookieSettings>(builder.Configuration.GetSection("CookieSettings"));
 builder.Services.AddScoped<IAuthenticationDataProvider, JwtDataProvider>();
 
 var app = builder.Build();
+
+app.UseExceptionHandler(_ => {});
 
 if (app.Environment.IsDevelopment())
 {
@@ -29,6 +35,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Hello World");
+app.AddEndpoints();
 
 app.Run();

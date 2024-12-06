@@ -9,7 +9,7 @@ public static class Extension
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<ICurrentAccountProvider, CurrentAccountProvider>();
-
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }

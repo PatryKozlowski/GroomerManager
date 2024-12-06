@@ -12,15 +12,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="MinimalApis.Extensions" Version="0.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../GroomerManager.Application/GroomerManager.Application.csproj" />
     <ProjectReference Include="../GroomerManager.Infrastructure/GroomerManager.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Endpoints/" />
   </ItemGroup>
 
 </Project>
