@@ -1,5 +1,6 @@
-using GroomerManager.Infrastructure.Persistence.Configurations;
 using GroomerManager.Application;
+using GroomerManager.Infrastructure;
+using GroomerManager.Infrastructure.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDatabaseConfiguration(builder.Configuration.GetConnectionString("GroomerManagerDB")!);
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 var app = builder.Build();
