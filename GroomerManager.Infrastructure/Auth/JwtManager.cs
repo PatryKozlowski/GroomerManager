@@ -92,7 +92,7 @@ public class JwtManager(IOptions<JwtOptions> jwtOptions)
         return GenerateTokenWithClaims(claims);
     }
     
-    public static string? GetClaim(string token, string claimType)
+    public string? GetClaim(string token, string claimType)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
