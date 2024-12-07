@@ -38,6 +38,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
         return exception switch
         {
             InvalidOperationException => (StatusCodes.Status400BadRequest, exception.Message),
+            UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, exception.Message),
             _ => (StatusCodes.Status500InternalServerError, "We are working on it !")
         };
     }

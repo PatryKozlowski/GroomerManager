@@ -1,4 +1,0 @@
-@GroomerManager.API_HostAddress = http://localhost:8080
-
-GET {{GroomerManager.API_HostAddress}}/
-Accept: application/json

@@ -29,7 +29,7 @@ public class CurrentAccountProvider(
 
         if (accountId == null)
         {
-            throw new UnauthorizedAccessException();
+            throw new UnauthorizedAccessException("Unauthorized");
         }
 
         var account = await _accountRepository.GetAccountById(accountId.Value);

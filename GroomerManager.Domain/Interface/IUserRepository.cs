@@ -6,4 +6,5 @@ public interface IUserRepository
 {
     Task<bool> IsUserExist (string userEmail);
     Task<User> CreateUserWithAccount(string  email, string password);
+    Task<User?> GetUserByEmail(string email);
 }

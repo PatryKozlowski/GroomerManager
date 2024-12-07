@@ -12,7 +12,6 @@ public class UserRepository(ApplicationDbContext applicationDbContext) : IUserRe
     {
         return await _applicationDbContext.Users.AnyAsync(u => u.Email == userEmail);
     }
-
     public async Task<User> CreateUserWithAccount(string email, string password)
     {
         var user = new User
@@ -44,5 +43,11 @@ public class UserRepository(ApplicationDbContext applicationDbContext) : IUserRe
         await _applicationDbContext.SaveChangesAsync();
 
         return user;
+    }
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        var user = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+        return user ?? null;
     }
 }

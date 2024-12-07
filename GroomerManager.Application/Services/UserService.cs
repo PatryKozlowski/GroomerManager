@@ -32,4 +32,20 @@ public class UserService(
 
         return user.Id;
     }
+    public async Task<int> LoginUser(LoginUserDto request)
+    {
+        var user = await _userRepository.GetUserByEmail(request.Email);
+
+        if (user != null)
+        {
+            var isValidPassword = _passwordManager.VerifyPassword(user.HasPassword, request.Password);
+            
+            if (isValidPassword)
+            {
+                return user.Id;
+            }
+        }
+        
+        throw new InvalidOperationException("InvalidLoginOrPassword");
+    }
 }
