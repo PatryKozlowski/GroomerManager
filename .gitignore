@@ -1,0 +1,7 @@
+.idea
+.vscode
+.idea
+*bin
+*obj
+*Migrations
+*appsettings.Development.local.json
