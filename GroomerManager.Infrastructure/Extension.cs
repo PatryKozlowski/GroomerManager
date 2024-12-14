@@ -1,4 +1,5 @@
 using GroomerManager.Application.Common.Interfaces;
+using GroomerManager.Infrastructure.Auth;
 using GroomerManager.Infrastructure.Persistence.Configurations;
 using GroomerManager.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,9 @@ public static class Extension
     {
         services.AddDatabaseConfiguration(configuration.GetConnectionString("GroomerManagerStore")!);
         services.AddTransient<IDateTime, DataTimeService>();
+        services.AddJwt(configuration);
         services.AddScoped(typeof(IPasswordHasher<>), typeof(PasswordHasher<>));
+        services.AddScoped<IPasswordManager, PasswordManager>();
         return services;
     }
 }

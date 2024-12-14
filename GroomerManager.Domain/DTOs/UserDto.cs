@@ -2,8 +2,9 @@ using GroomerManager.Domain.Entities;
 
 namespace GroomerManager.Domain.DTOs;
 
-public record UserDto(
-    int Id,
-    string Email,
-    ICollection<UserRole> Roles
-    );
+public class UserDto
+{
+    public required int Id { get; set; }
+    public required string Email { get; set; }
+    public ICollection<UserRole> Roles { get; set; }
+}

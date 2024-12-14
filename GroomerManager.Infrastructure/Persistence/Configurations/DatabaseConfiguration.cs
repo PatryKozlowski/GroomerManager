@@ -1,3 +1,4 @@
+using GroomerManager.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class DatabaseConfiguration
             o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery));
 
         services.AddDbContext<ApplicationDbContext>(sqlOptions);
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         return services;
     }
 }
