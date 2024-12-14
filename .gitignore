@@ -1,0 +1,9 @@
+.idea
+.vscode
+.idea
+*bin
+*obj
+*Migrations
+*appsettings.local.Development.json
+GroomerManager.Web/wwwroot
+.DS_Store
