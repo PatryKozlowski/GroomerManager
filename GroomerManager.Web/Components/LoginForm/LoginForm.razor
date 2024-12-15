@@ -1,5 +1,90 @@
-<h3>LoginForm</h3>
+@using GroomerManager.Shared.DTOs.Request
+@using GroomerManager.Web.Components.Spinner
+@using GroomerManager.Web.Services.Auth
+@using GroomerManager.Web.Utils
+@using Microsoft.AspNetCore.Components.Authorization
+@using GroomerManager.Web.Components.ErrorMessage
+
+@inject IAuthService authService
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navigation
+
+<div class="vh-100 d-flex justify-content-center align-items-center">
+
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <EditForm Enhance Model="@User" FormName="loginUser" OnValidSubmit="HandleSubmitAsync">
+                    <DataAnnotationsValidator/>
+                    <!-- Email input -->
+                    <label class="form-label" for="email">Email address</label>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <InputText type="email" id="email" @bind-Value="User.Email" class="form-control form-control-lg"
+                                   placeholder="Enter a valid email address"/>
+                        <ValidationMessage For="() => User.Email"/>
+                    </div>
+                    <!-- Password input -->
+                    <div data-mdb-input-init class="form-outline mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <InputText type="password" id="password" @bind-Value="User.Password" class="form-control form-control-lg"
+                                   placeholder="Enter password"/>
+                        <ValidationMessage For="() => User.Password"/>
+                    </div>
+                    <ErrorMessage Message="@Error"/>
+                    <div class="text-center mt-4 pt-2">
+                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg w-100"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            @if (IsLoading)
+                            {
+                                <Spinner />
+                            }
+                            else
+                            {
+                                <span>Login</span>
+                            }
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
-    
+    private bool IsLoading;
+    private string Error;
+    private LoginRequestDto User = new()
+    {
+        Email = string.Empty,
+        Password = string.Empty
+    };
+
+    private async Task HandleSubmitAsync()
+    {
+        Error = string.Empty;
+        IsLoading = true;
+        try
+        {
+            var result = await authService.LoginUserAsync(User);
+
+            if (result != null)
+            {
+                await ((CustomAuthStateProvider)authStateProvider).MarkUserAsAuthenticated(result.Token);
+                navigation.NavigateTo("/dashboard");
+            }
+        }
+        catch (Exception e)
+        {
+            Error = e.Message;
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
 }

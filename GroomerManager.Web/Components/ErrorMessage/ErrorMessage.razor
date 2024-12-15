@@ -1,5 +1,11 @@
-<h3>ErrorMessage</h3>
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <div class="alert alert-danger" role="alert">
+        @Message
+    </div>
+}
 
 @code {
-    
+    [Parameter] 
+    public string? Message { get; set; }
 }

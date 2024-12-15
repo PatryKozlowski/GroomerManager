@@ -1,5 +1,4 @@
 using GroomerManager.Application.Auth;
-using GroomerManager.Domain.DTOs;
 using GroomerManager.Infrastructure.Auth;
 using GroomerManager.Shared.DTOs.Response;
 using MediatR;
