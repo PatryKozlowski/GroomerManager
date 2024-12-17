@@ -1,0 +1,31 @@
+﻿<div>
+    <button 
+        @onclick="ToggleOpenDropdownUserMenu"
+        class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors duration-200 ease-in-out"
+    >
+        <span class="font-medium text-gray-600 dark:text-gray-300">PK</span>
+    </button>
+</div>
+<div class="@($"absolute top-[60px] right-1 w-52 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 {(IsOpenDropdownUserMenu ? "block" : "hidden")}")">
+    <div class="px-4 py-3">
+        <p class="text-sm text-gray-900 dark:text-white">
+            Patryk Kozłowski
+        </p>
+    </div>
+    <ul class="py-1">
+        <li>
+            <a href="logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                Wyloguj
+            </a>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool IsOpenDropdownUserMenu = false;
+
+    private void ToggleOpenDropdownUserMenu()
+    {
+        IsOpenDropdownUserMenu = !IsOpenDropdownUserMenu;
+    }
+}

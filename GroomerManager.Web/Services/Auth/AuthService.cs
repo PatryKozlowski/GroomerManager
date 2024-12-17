@@ -7,11 +7,11 @@ namespace GroomerManager.Web.Services.Auth;
 public class AuthService(ApiClient apiClient) : IAuthService
 {
     private const string LOGIN_API = "/api/Auth/Login";
-    
-    public Task<LoginResponseDto> LoginUserAsync(LoginRequestDto request)
-    {
-        var result = apiClient.PostAsync<LoginResponseDto, LoginRequestDto>(LOGIN_API, request);
 
-        return result;
+    public async Task<LoginResponseDto> LoginUserAsync(LoginRequestDto request)
+    {
+        var response = await apiClient.PostAsync<LoginResponseDto, LoginRequestDto>(LOGIN_API, request);
+
+        return response;
     }
 }

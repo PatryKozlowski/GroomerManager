@@ -1,3 +1,4 @@
+using GroomerManager.Web;
 using GroomerManager.Web.Components;
 using GroomerManager.Web.Services.Auth;
 using GroomerManager.Web.Utils;
@@ -15,6 +16,7 @@ builder.AddServiceDefaults();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddSingleton<AppState>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ProtectedLocalStorage>();
@@ -25,7 +27,7 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddHttpClient<ApiClient>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5021");
+    client.BaseAddress = new Uri("http://backend");
 });
 
 var app = builder.Build();

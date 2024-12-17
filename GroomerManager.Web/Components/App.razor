@@ -5,17 +5,16 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
-    <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]"/>
     <link rel="stylesheet" href="@Assets["app.css"]"/>
-    <link rel="stylesheet" href="@Assets["GroomerManager.Web.styles.css"]"/>
+    <script src="app.js"></script>
     <ImportMap/>
     <link rel="icon" type="image/png" href="favicon.png"/>
     <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender:false)" />
 </head>
 
-<body>
-<Routes @rendermode="new InteractiveServerRenderMode(prerender:false)" />
-<script src="_framework/blazor.web.js"></script>
+<body class="bg-gray-50 dark:bg-gray-800">
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender:false)" />
+    <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>

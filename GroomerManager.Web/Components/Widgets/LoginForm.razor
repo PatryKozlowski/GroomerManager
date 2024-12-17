@@ -1,0 +1,121 @@
+@using Blazored.FluentValidation
+@using FluentValidation
+@using GroomerManager.Shared.DTOs.Request
+@using GroomerManager.Web.Utils
+@using GroomerManager.Web.Services.Auth
+
+@inject IAuthService AuthService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+
+<div class="flex items-center justify-center h-screen">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap items-center justify-center h-full">
+            <div class="w-full md:w-1/2 lg:w-5/12">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" 
+                     class="w-full h-auto" alt="Sample image">
+            </div>
+            <div class="w-full md:w-1/2 lg:w-4/12">
+                <EditForm Enhance Model="@User" FormName="loginUser" OnValidSubmit="HandleSubmitAsync">
+                    <FluentValidationValidator />
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Adres email</label>
+                        <InputText 
+                            type="email" 
+                            id="email" 
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Podaj adres email" 
+                            @bind-Value="User.Email" 
+                            @oninput="HandleInputChange" 
+                        />
+                        <SingleValidationMessage For="() => User.Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="block text-gray-700 font-medium mb-2">Hasło</label>
+                        <InputText 
+                            type="password" 
+                            id="password" 
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Podaj hasło" 
+                            @bind-Value="User.Password" 
+                            @oninput="HandleInputChange" 
+                        />
+                        <SingleValidationMessage For="() => User.Password" />
+                    </div>
+                    <Message Error="@Message" />
+                    <div class="text-center mt-4 pt-2">
+                        <button type="submit" 
+                                class="w-full bg-blue-600 text-white font-semibold rounded-lg py-3 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
+                            @if (IsLoading)
+                            {
+                                <Spinner />
+                            }
+                            else
+                            {
+                                <span>Zaloguj się</span>
+                            }
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool IsLoading = false;
+    private string Message = string.Empty;
+    private LoginRequestDto User = new()
+    {
+        Email = string.Empty,
+        Password = string.Empty
+    };
+
+    private async Task HandleSubmitAsync()
+    {
+        IsLoading = true;
+        try
+        {
+            Message = string.Empty;
+            var result = await AuthService.LoginUserAsync(User);
+
+            if (result != null)
+            {
+                await ((CustomAuthStateProvider)AuthStateProvider).MarkUserAsAuthenticated(result);
+                Navigation.NavigateTo("/dashboard");
+            }
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message;
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void HandleInputChange(ChangeEventArgs e)
+    {
+        Message = string.Empty;
+    }
+
+    public class Validator : AbstractValidator<LoginRequestDto>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
+            
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .MinimumLength(8)
+                .Matches("[A-Z]")
+                .Matches("[a-z]")
+                .Matches("[0-9]")
+                .Matches("[^a-zA-Z0-9]");
+        }
+    }
+} 
+

@@ -12,6 +12,7 @@ public static class Extension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // services.AddDatabaseConfiguration(configuration.GetConnectionString("groomer-manager-store")!);
         services.AddDatabaseConfiguration(configuration.GetConnectionString("GroomerManagerStore")!);
         services.AddTransient<IDateTime, DataTimeService>();
         services.AddJwt(configuration);

@@ -7,4 +7,5 @@ public class User : BaseEntity
     public required string Email { get; set; }
     public required string HashedPassword { get; set; }
     public ICollection<UserRole> Roles { get; set; } = [];
+    public RefreshToken? RefreshToken { get; set; }
 }

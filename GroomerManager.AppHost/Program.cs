@@ -1,6 +1,12 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var backend = builder.AddProject<Projects.GroomerManager_API>("backend");
+var postgres = builder.AddPostgres("groomer-manager-store")
+    .WithDataVolume()
+    .WithPgAdmin();
+
+var backend = builder.AddProject<Projects.GroomerManager_API>("backend")
+    .WaitFor(postgres)
+    .WithReference(postgres);
 
 var frontend = builder.AddProject<Projects.GroomerManager_Web>("frontend")
     .WithReference(backend);

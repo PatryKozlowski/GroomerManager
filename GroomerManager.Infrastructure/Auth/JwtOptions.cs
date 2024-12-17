@@ -6,5 +6,5 @@ public class JwtOptions
     public required string RefreshTokenSecret { get; set; }
     public required string Issuer { get; set; }
     public required string Audience { get; set; }
-    public int ExpireInDays { get; set; }
+    public int Expires { get; set; }
 }

@@ -1,5 +1,4 @@
 using GroomerManager.Application.Auth;
-using GroomerManager.Infrastructure.Auth;
 using GroomerManager.Shared.DTOs.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +7,8 @@ namespace GroomerManager.API.Controller;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class AuthController( 
-    IMediator mediator,
-    JwtManager jwtManager
+public class AuthController(
+    IMediator mediator
 ) : BaseController(mediator)
 {
     private readonly IMediator _mediator = mediator;
@@ -26,14 +24,13 @@ public class AuthController(
     public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginCommand.Request request)
     {
         var result = await _mediator.Send(request);
-        var token = jwtManager.GenerateUserToken(result, false);
-        var refreshToken = jwtManager.GenerateUserToken(result, true);
-        
-        return Ok(new LoginResponseDto
-        {
-            Token = token,
-            TokenExpired = 0,
-            RefreshToken = refreshToken
-        });
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<LoginResponseDto>> LoginRefreshToken([FromQuery] LoginRefreshTokenCommand.Request request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 }

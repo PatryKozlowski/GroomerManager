@@ -1,0 +1,22 @@
+﻿@using System.Linq.Expressions
+
+@typeparam TProperty
+@if (FirstMessage != null)
+{
+    <div class="text-red-500 text-sm mt-1">@FirstMessage</div>
+}
+
+@code {
+    [Parameter] public Expression<Func<TProperty>> For { get; set; }
+
+    [CascadingParameter] private EditContext EditContext { get; set; }
+
+    private string FirstMessage => EditContext == null || For == null
+        ? null
+        : EditContext.GetValidationMessages(FieldIdentifier).FirstOrDefault();
+
+    private FieldIdentifier FieldIdentifier =>
+        For == null
+            ? throw new InvalidOperationException("For parameter must be set.")
+            : FieldIdentifier.Create(For);
+}

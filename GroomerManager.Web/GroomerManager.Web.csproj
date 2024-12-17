@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
@@ -12,8 +12,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Styles/" />
+    </ItemGroup>
+
+     <Target Name="Tailwind" BeforeTargets="Compile">
+      <Exec Command="npx tailwindcss -i ./Styles/app.css -o ./wwwroot/app.css" />
+    </Target>
 
 </Project>

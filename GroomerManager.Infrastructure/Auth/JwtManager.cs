@@ -1,13 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using GroomerManager.Application.Common.Interfaces;
 using GroomerManager.Domain.DTOs;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace GroomerManager.Infrastructure.Auth;
 
-public class JwtManager(IOptions<JwtOptions> jwtOptions)
+public class JwtManager(IOptions<JwtOptions> jwtOptions) : IJwtManager
 {
     public const string USER_ID_CLAIM = "UserId";
     public const string USER_EMAIL_CLAIM = "UserEmail";
@@ -33,7 +34,7 @@ public class JwtManager(IOptions<JwtOptions> jwtOptions)
             throw new ArgumentException("[JWT] Issuer or Audience is empty");
         }
 
-        if (_jwtOptions.ExpireInDays <= 0)
+        if (_jwtOptions.Expires <= 0)
         {
             throw new ArgumentException("[JWT] Expiration is empty or has wrong value");
         }
@@ -44,7 +45,7 @@ public class JwtManager(IOptions<JwtOptions> jwtOptions)
         var tokenDescription = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(isRefreshToken ? 24*60 : 30),
+            Expires = DateTime.UtcNow.AddMinutes(isRefreshToken ? 24*60*35 : 24*60*30),
             Issuer = _jwtOptions.Issuer,
             Audience = _jwtOptions.Audience,
             SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)

@@ -1,0 +1,45 @@
+@using GroomerManager.Web.Utils
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthStateProvider
+@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <Nav IsOpenSidebar="@IsOpenSidebar" ToggleSidebar="ToggleSidebar" />
+        <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+            <Sidebar IsOpenSidebar="@IsOpenSidebar" />
+            <div class="@($"fixed inset-0 z-10 bg-gray-900/50 dark:bg-gray-900/90 {(IsOpenSidebar ? "" : "hidden")}")"></div>
+            <div class="relative w-full h-full overflow-y-auto lg:ml-64 dark:bg-gray-900">
+                <main>
+                    <div class="px-4 pt-6">
+                        @Body
+                    </div>
+                </main>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div>You're not authorized.</div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private bool IsOpenSidebar = false;
+    
+    private void ToggleSidebar()
+    {
+        IsOpenSidebar = !IsOpenSidebar;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await ((CustomAuthStateProvider)AuthStateProvider).GetAuthenticationStateAsync();
+
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+}

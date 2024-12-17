@@ -8,5 +8,6 @@ public interface IApplicationDbContext
     DbSet<User> Users { get; set; }
     DbSet<UserRole> UserRoles { get; set; }
     DbSet<Role> Roles { get; set; }
+    DbSet<RefreshToken> RefreshTokens { get; set; }
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
