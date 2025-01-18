@@ -10,4 +10,5 @@ public class Salon : BaseEntity
     public Guid OwnerId { get; set; }
     public User Owner { get; set; } = null!;
     public ICollection<UserSalon> UserSalons { get; set; } = null!;
+    public ICollection<Client> Clients { get; set; } = new List<Client>();
 }
