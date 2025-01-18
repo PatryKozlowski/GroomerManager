@@ -16,6 +16,8 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/openapi/v1.json", "GroomerManager Demo API");
     });
+    
+    builder.Configuration.AddJsonFile("appsettings.local.Development.json");
 }
 
 app.UseHttpsRedirection();
