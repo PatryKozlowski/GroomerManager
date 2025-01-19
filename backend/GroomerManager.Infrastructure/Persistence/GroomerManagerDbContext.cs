@@ -8,11 +8,13 @@ namespace GroomerManager.Infrastructure.Persistence;
 public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
 {
     private readonly IDateTime _dateTime;
+    private readonly IAuthenticationDataProvider _authenticationDataProvider;
     
-    public GroomerManagerDbContext(DbContextOptions<GroomerManagerDbContext> options, IDateTime dateTime)
+    public GroomerManagerDbContext(DbContextOptions<GroomerManagerDbContext> options, IDateTime dateTime,   IAuthenticationDataProvider authenticationDataProvider)
         : base(options)
     {
         _dateTime = dateTime;
+        _authenticationDataProvider = authenticationDataProvider;
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +33,7 @@ public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var userEmail =  "System";
+        var userEmail = _authenticationDataProvider.GetUserEmail() ?? "System";
 
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {

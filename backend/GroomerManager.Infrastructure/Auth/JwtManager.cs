@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GroomerManager.Infrastructure.Auth;
 
-public class JwtManager
+public class JwtManager : IJwtManager
 {
     private readonly JwtOptions _jwtOptions;
     private readonly IDateTime _dateTime;

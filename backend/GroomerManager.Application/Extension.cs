@@ -14,7 +14,7 @@ public static class Extension
     {
         services.AddCQRS();
         services.AddValidators();
-        services.AddScoped<ICurrentAccountProvider, CurrentAccountProvider>();
+        services.AddScoped<ICurrentSalonProvider, CurrentSalonProvider>();
         return services;
     }
     

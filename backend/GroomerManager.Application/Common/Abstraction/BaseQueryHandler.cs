@@ -5,9 +5,11 @@ namespace GroomerManager.Application.Common.Abstraction;
 public abstract class BaseQueryHandler
 {
     protected readonly IGroomerManagerDbContext _groomerManagerDb;
-
-    public BaseQueryHandler(IGroomerManagerDbContext groomerManagerDb)
+    protected readonly ICurrentSalonProvider _currentSalonProvider;
+    
+    public BaseQueryHandler(IGroomerManagerDbContext groomerManagerDb, ICurrentSalonProvider currentSalonProvider)
     {
         _groomerManagerDb = groomerManagerDb;
+        _currentSalonProvider = currentSalonProvider;
     }
 }

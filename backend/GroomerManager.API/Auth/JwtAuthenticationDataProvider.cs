@@ -5,10 +5,10 @@ namespace GroomerManager.API.Auth;
 
 public class JwtAuthenticationDataProvider : IAuthenticationDataProvider
 {
-    private readonly JwtManager _jwtManager;
+    private readonly IJwtManager _jwtManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public JwtAuthenticationDataProvider(JwtManager jwtManager, IHttpContextAccessor httpContextAccessor)
+    public JwtAuthenticationDataProvider(IJwtManager jwtManager, IHttpContextAccessor httpContextAccessor)
     {
         _jwtManager = jwtManager;
         _httpContextAccessor = httpContextAccessor;

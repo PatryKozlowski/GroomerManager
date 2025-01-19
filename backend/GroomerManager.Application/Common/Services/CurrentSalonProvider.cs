@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GroomerManager.Application.Common.Services;
 
-public class CurrentAccountProvider : ICurrentAccountProvider
+public class CurrentSalonProvider : ICurrentSalonProvider
 {
     private readonly IAuthenticationDataProvider _authenticationDataProvider;
     private readonly IGroomerManagerDbContext _groomerManagerDb;
     
-    public CurrentAccountProvider(IAuthenticationDataProvider authenticationDataProvider, IGroomerManagerDbContext groomerManagerDbContext)
+    public CurrentSalonProvider(IAuthenticationDataProvider authenticationDataProvider, IGroomerManagerDbContext groomerManagerDbContext)
     {
         _authenticationDataProvider = authenticationDataProvider;
         _groomerManagerDb = groomerManagerDbContext;

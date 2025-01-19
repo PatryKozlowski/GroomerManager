@@ -1,7 +1,7 @@
 namespace GroomerManager.Domain.DTOs;
 
 public record UserDto(
-    int Id,
+    Guid Id,
     string Email,
     List<string> Roles
 );
