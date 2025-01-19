@@ -1,7 +1,10 @@
+using GroomerManager.Domain.Entities;
+
 namespace GroomerManager.Domain.DTOs;
 
-public record UserDto(
-    Guid Id,
-    string Email,
-    List<string> Roles
-);
+public class UserDto
+{
+    public required Guid Id { get; set; }
+    public required string Email { get; set; }
+    public required Role Role { get; set; }
+}

@@ -5,5 +5,5 @@ namespace GroomerManager.Application.Common.Interfaces;
 public interface ICurrentSalonProvider
 {
     Task<List<Guid>> GetSalonId();
-    Task<Salon> GetAuthenticatedSalon(Guid salonId);
+    Task<Domain.Entities.Salon> GetAuthenticatedSalon(Guid salonId);
 }

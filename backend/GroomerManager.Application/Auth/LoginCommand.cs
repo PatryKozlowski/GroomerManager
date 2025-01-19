@@ -35,8 +35,7 @@ public abstract class LoginCommand
         public async Task<LoginResponseDto> Handle(Request request, CancellationToken cancellationToken)
         {
             var user = await _groomerManagerDb.Users
-                .Include(u => u.Roles)        
-                .ThenInclude(ur => ur.Role)   
+                .Include(u => u.Role)        
                 .FirstOrDefaultAsync(u => u.Email == request.Email,
                     cancellationToken);
 
@@ -47,11 +46,12 @@ public abstract class LoginCommand
             
             if (_passwordManager.VerifyPassword(user.HashedPassword, request.Password))
             {
-                var userDto = new UserDto(
-                    user.Id,
-                    user.Email,
-                    user.Roles.Select(r => r.Role.Name).ToList()
-                );
+                var userDto = new UserDto
+                {
+                    Id =   user.Id,
+                    Email = user.Email,
+                    Role = user.Role
+                };
 
                 var token = _jwtManager.GenerateUserToken(userDto, false);
                 var refreshToken = _jwtManager.GenerateUserToken(userDto, true);

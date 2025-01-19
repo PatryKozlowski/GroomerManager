@@ -100,9 +100,10 @@ public class JwtManager : IJwtManager
         var claims = new List<Claim>()
         {
             new(USER_ID_CLAIM, user.Id.ToString()),
-            new (USER_EMAIL_CLAIM, user.Email)
+            new (USER_EMAIL_CLAIM, user.Email),
+            new(USER_ROLE, user.Role.Name)  
         };
-        claims.AddRange(user.Roles.Select(role => new Claim(USER_ROLE, role)));
+        // claims.AddRange(user.Roles.Select(role => new Claim(USER_ROLE, role)));
         return GenerateTokenWithClaims(claims, isRefreshToken);
     }
 

@@ -39,6 +39,24 @@ public class AuthController: BaseController
         return Ok(result);
     }
     
+    [HttpGet]
+    public async Task<ActionResult<LoginResponseDto>> RefreshToken()
+    {
+        var result = await _mediator.Send(new LoginRefreshTokenCommand.Request() {});
+        SetTokenCookie(result.Token);
+        SetTokenCookie(result.RefreshToken, true);
+        return Ok(result);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<LogoutResponseDto>> Logout()
+    {
+        var logoutResult = await _mediator.Send(new LogoutCommand.Request());
+        DeleteTokenCookie();
+        DeleteTokenCookie(true);
+        return Ok(logoutResult);
+    }
+    
     private void SetTokenCookie(string token, bool isRefreshToken = false)
     {
         var cookieOption = new CookieOptions()

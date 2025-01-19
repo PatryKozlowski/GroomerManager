@@ -5,6 +5,11 @@ using GroomerManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddJsonFile("appsettings.local.Development.json");
+}
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddOpenApi();
 builder.Services.AddApplication();
@@ -24,8 +29,6 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/openapi/v1.json", "GroomerManager Demo API");
     });
-    
-    builder.Configuration.AddJsonFile("appsettings.local.Development.json");
 }
 
 app.UseHttpsRedirection();
