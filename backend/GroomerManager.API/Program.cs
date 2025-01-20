@@ -1,6 +1,7 @@
 using GroomerManager.API.Auth;
 using GroomerManager.API.Exception;
 using GroomerManager.Application;
+using GroomerManager.Application.Common.Interfaces;
 using GroomerManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

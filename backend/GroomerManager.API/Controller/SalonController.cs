@@ -22,4 +22,17 @@ public class SalonController : BaseController
         var result = await _mediator.Send(new GetUserSalonCommand.Request() {});
         return Ok(result);
     }
+    
+    [HttpPost]
+    public async Task<ActionResult<AddSalonResponseDto>> Login([FromBody] AddSalonRequestDto dto)
+    {
+        var request = new CreateSalonCommand.Request
+        {
+            Name = dto.Name,
+            Logo = dto.Logo
+        };
+
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
 }
