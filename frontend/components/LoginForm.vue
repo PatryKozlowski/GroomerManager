@@ -10,7 +10,11 @@
         </CardDescription>
       </CardHeader>
       <CardContent class="grid gap-4">
-        <FormField v-slot="{ componentField }" name="email">
+        <FormField
+          v-slot="{ componentField }"
+          name="email"
+          :validate-on-blur="false"
+        >
           <FormItem>
             <FormLabel>Email</FormLabel>
             <FormControl>
@@ -23,7 +27,11 @@
             <FormMessage />
           </FormItem>
         </FormField>
-        <FormField v-slot="{ componentField }" name="password">
+        <FormField
+          v-slot="{ componentField }"
+          name="password"
+          :validate-on-blur="false"
+        >
           <FormItem>
             <FormLabel>Hasło</FormLabel>
             <FormControl>
@@ -56,5 +64,7 @@ const form = useForm<LoginRequestDto>({
   },
 });
 
-const onSubmit = form.handleSubmit((values) => {});
+const onSubmit = form.handleSubmit((values) => {
+  authStore.loginUser(values);
+});
 </script>

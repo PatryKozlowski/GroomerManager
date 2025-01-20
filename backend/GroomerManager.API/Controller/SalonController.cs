@@ -1,4 +1,5 @@
 using GroomerManager.Application.Salon;
+using GroomerManager.Domain.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class SalonController : BaseController
     }
     
     [HttpGet]
-    public async Task<ActionResult> GetUserSalons()
+    public async Task<ActionResult<List<SalonResponseDto>>> GetUserSalons()
     {
         var result = await _mediator.Send(new GetUserSalonCommand.Request() {});
         return Ok(result);

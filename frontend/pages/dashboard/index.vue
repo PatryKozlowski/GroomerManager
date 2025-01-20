@@ -6,6 +6,13 @@
 useHead({ title: "Groomer Manager - Dashboard" });
 
 definePageMeta({
+  layout: "dashboard",
   middleware: "auth",
+});
+
+const salonStore = useSalonStore();
+
+onMounted(async () => {
+  // await salonStore.loadSalons();
 });
 </script>

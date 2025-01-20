@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html.light-mode {
+  color-scheme: light;
+}
+
+html.dark-mode {
+  color-scheme: dark;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

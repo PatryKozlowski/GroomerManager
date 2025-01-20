@@ -49,7 +49,6 @@ export const useApi = function (request: string, opts: Record<string, any>) {
           .catch(() => {
             $fetch("/api/Auth/Logout", {
               baseURL: config.public.API_URL,
-              method: "POST",
               credentials: "include",
             });
             authStore.clearIsAuthenticated();

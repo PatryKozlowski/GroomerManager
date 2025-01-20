@@ -8,3 +8,16 @@ export interface LoginResponse {
   tokenExpired: number;
   refreshToken: string;
 }
+
+export interface Salon {
+  id: string;
+  name: string;
+  logoPath: string;
+}
+
+export type SalonsResponse = Salon[];
+
+export interface AddSalonForm {
+  name: string;
+  logo: File;
+}

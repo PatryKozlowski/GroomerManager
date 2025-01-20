@@ -1,3 +1,6 @@
+import { useToast } from "@/components/ui/toast/use-toast";
+import { useSalonStore } from "./salon";
+
 export const useAuthStore = defineStore("authStore", {
   state: () => ({
     isAuthenticated: false,
@@ -8,17 +11,22 @@ export const useAuthStore = defineStore("authStore", {
   },
   actions: {
     async loginUser(values: LoginRequestDto) {
+      const { toast } = useToast();
+      const salonStore = useSalonStore();
       this.isLoading = true;
       useApi("/api/Auth/Login", {
         method: "POST",
         body: values,
       })
-        .then((response) => {
+        .then(async (response) => {
           const data = response.data.value as LoginResponse;
           if (data) {
             this.setIsAuthenticated();
-            // router.push("/dashboard");
-            // navigateTo("/dashboard");
+            await salonStore.loadSalons();
+            toast({
+              variant: "success",
+              description: "Pomyślnie zalogowano !",
+            });
           }
         })
         .finally(() => {
