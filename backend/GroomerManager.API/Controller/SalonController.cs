@@ -24,13 +24,16 @@ public class SalonController : BaseController
     }
     
     [HttpPost]
-    public async Task<ActionResult<AddSalonResponseDto>> Login([FromBody] AddSalonRequestDto dto)
+    public async Task<ActionResult<AddSalonResponseDto>> CreateSalon([FromForm] AddSalonRequestDto dto)
     {
         var request = new CreateSalonCommand.Request
         {
             Name = dto.Name,
             Logo = dto.Logo
         };
+        
+        Console.WriteLine($"Odebrano nazwę: {request.Name}");
+        Console.WriteLine($"Odebrano logo: {request.Logo?.FileName}");
 
         var result = await _mediator.Send(request);
         return Ok(result);

@@ -21,3 +21,8 @@ export interface AddSalonForm {
   name: string;
   logo: File;
 }
+
+export interface AddSalonResponse {
+  salonId: string;
+  logoPath: string;
+}

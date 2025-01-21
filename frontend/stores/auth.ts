@@ -12,6 +12,7 @@ export const useAuthStore = defineStore("authStore", {
   actions: {
     async loginUser(values: LoginRequestDto) {
       const { toast } = useToast();
+      const router = useRouter();
       const salonStore = useSalonStore();
       this.isLoading = true;
       useApi("/api/Auth/Login", {
@@ -23,6 +24,7 @@ export const useAuthStore = defineStore("authStore", {
           if (data) {
             this.setIsAuthenticated();
             await salonStore.loadSalons();
+            // router.push("/dashboard");
             toast({
               variant: "success",
               description: "Pomyślnie zalogowano !",
@@ -39,6 +41,19 @@ export const useAuthStore = defineStore("authStore", {
 
     clearIsAuthenticated() {
       this.isAuthenticated = false;
+    },
+
+    async logoutUser() {
+      const salonStore = useSalonStore();
+      const router = useRouter();
+
+      useApi("/api/Auth/Logout", {
+        method: "GET",
+      }).then(() => {
+        this.clearIsAuthenticated();
+        router.push("/");
+        // await salonStore.clearSalonState();
+      });
     },
   },
 });

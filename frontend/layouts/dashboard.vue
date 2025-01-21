@@ -4,14 +4,9 @@
   >
     <div class="hidden border-r bg-muted/40 md:block">
       <div class="flex h-full max-h-screen flex-col gap-2">
-        <div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-          <NuxtLink
-            href="/dashboard"
-            class="flex items-center gap-2 font-semibold"
-          >
-            <!-- <Logo /> -->
-            <span class="">Pies Na Glanc</span>
-          </NuxtLink>
+        <div class="flex h-14 items-center border-b lg:h-[60px]">
+          <SalonLogo v-if="salonStore.salons.length === 1" />
+          <DropdownSalon v-else />
         </div>
         <div class="flex-1">
           <Nav :links="navLinks" />
@@ -47,4 +42,6 @@ const navLinks = [
 ];
 
 const route = useRoute();
+
+const salonStore = useSalonStore();
 </script>

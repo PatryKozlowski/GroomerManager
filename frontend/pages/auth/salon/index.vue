@@ -103,7 +103,7 @@
                   <FormControl>
                     <Input
                       type="file"
-                      @change="setValue($event.target.files?.[0] || undefined)"
+                      @change="(event: any) => setValue(event.target.files[0] || undefined)"
                       accept="image/png"
                     />
                   </FormControl>
@@ -133,8 +133,13 @@
                 Dalej
               </Button>
               <Button v-if="stepIndex === 2" size="sm" type="submit">
-                <Plus />
-                Dodaj
+                <template v-if="salonStore.isLoading">
+                  <Spinner />
+                </template>
+                <template v-else>
+                  <Plus />
+                  Dodaj
+                </template>
               </Button>
             </div>
           </div>
@@ -154,6 +159,7 @@ definePageMeta({
   middleware: "auth",
 });
 
+const salonStore = useSalonStore();
 const stepIndex = ref(1);
 const steps = [
   {
@@ -168,7 +174,20 @@ const steps = [
   },
 ];
 
-function onSubmit(values: AddSalonForm) {
-  console.log("add salon ", values);
+async function onSubmit(values: AddSalonForm) {
+  const formData = new FormData();
+  formData.append("name", values.name);
+  formData.append("logo", values.logo);
+
+  if (!values.logo) {
+    console.error("Brak pliku logo!");
+    return;
+  }
+
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+
+  await salonStore.addNewSalon(formData);
 }
 </script>

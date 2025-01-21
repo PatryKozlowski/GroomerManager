@@ -30,7 +30,10 @@
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem @click="logoutUser" class="hover:cursor-pointer">
+      <DropdownMenuItem
+        @click="authStore.logoutUser()"
+        class="hover:cursor-pointer"
+      >
         <LogOut />
         Wyloguj się
       </DropdownMenuItem>
@@ -42,16 +45,6 @@
 import { BadgeCheck, LogOut, User } from "lucide-vue-next";
 
 const authStore = useAuthStore();
-const router = useRouter();
-
-const logoutUser = () => {
-  useApi("/api/Auth/Logout", {
-    method: "GET",
-  }).then(() => {
-    authStore.clearIsAuthenticated();
-    router.push("/");
-  });
-};
 
 const data = {
   user: {
