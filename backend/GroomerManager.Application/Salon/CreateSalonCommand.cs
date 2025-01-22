@@ -1,3 +1,4 @@
+using FluentValidation;
 using GroomerManager.Application.Common.Abstraction;
 using GroomerManager.Application.Common.Exceptions;
 using GroomerManager.Application.Common.Interfaces;
@@ -37,16 +38,25 @@ public abstract class CreateSalonCommand
                 throw new UnauthorizedException();
             }
 
-            var user = await _groomerManagerDb.Users.FirstOrDefaultAsync(u => u.Id == userId.Value);
+            var user = await _groomerManagerDb.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Id == userId.Value, cancellationToken);
             
             if (user == null)
             {
                 throw new ErrorException("UserDoesNotExist");
             }
             
+            var isSalonExist = await _groomerManagerDb.Salons.AnyAsync(s => s.Name == request.Name, cancellationToken);
+            
+            if (isSalonExist)
+            {
+                throw new ErrorException("SalonAlreadyExist");
+            }
+            
             using Stream stream = request.Logo.OpenReadStream();
 
-            var (logoGlobPath, logoId) = await _blobService.UploadAsync(stream, request.Logo.ContentType);
+            var (logoGlobPath, logoId) = await _blobService.UploadAsync(stream, request.Logo.ContentType, cancellationToken);
 
             if (logoGlobPath == null)
             {
@@ -63,14 +73,36 @@ public abstract class CreateSalonCommand
             };
 
             _groomerManagerDb.Salons.Add(newSalon);
+            
+            var userSalon = new Domain.Entities.UserSalon
+            {
+                UserId = user.Id,
+                SalonId = newSalon.Id,
+                Role = user.Role.Name
+            };
 
-            await _groomerManagerDb.SaveChangesAsync();
+            _groomerManagerDb.UserSalons.Add(userSalon);
+            
+            await _groomerManagerDb.SaveChangesAsync(cancellationToken);
 
             return new AddSalonResponseDto()
             {
                 SalonId = newSalon.Id,
-                LogoPath = newSalon.LogoPath
+                LogoPath = newSalon.LogoPath,
+                Name = newSalon.Name
             };
+        }
+        
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Name)
+                    .NotEmpty().WithMessage("SalonNameIsRequired");
+
+                RuleFor(x => x.Logo)
+                    .NotEmpty().WithMessage("SalonLogoIsRequired");
+            }
         }
     }
 }

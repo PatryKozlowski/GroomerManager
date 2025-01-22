@@ -12,8 +12,8 @@ export const useAuthStore = defineStore("authStore", {
   actions: {
     async loginUser(values: LoginRequestDto) {
       const { toast } = useToast();
-      const router = useRouter();
       const salonStore = useSalonStore();
+      const userStore = useUserStore();
       this.isLoading = true;
       useApi("/api/Auth/Login", {
         method: "POST",
@@ -23,6 +23,7 @@ export const useAuthStore = defineStore("authStore", {
           const data = response.data.value as LoginResponse;
           if (data) {
             this.setIsAuthenticated();
+            await userStore.loadLoggedInUser();
             await salonStore.loadSalons();
             // router.push("/dashboard");
             toast({
@@ -44,14 +45,11 @@ export const useAuthStore = defineStore("authStore", {
     },
 
     async logoutUser() {
-      const salonStore = useSalonStore();
-      const router = useRouter();
-
       useApi("/api/Auth/Logout", {
         method: "GET",
       }).then(() => {
         this.clearIsAuthenticated();
-        router.push("/");
+        navigateTo("/");
         // await salonStore.clearSalonState();
       });
     },

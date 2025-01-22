@@ -57,6 +57,13 @@ public class AuthController: BaseController
         return Ok(logoutResult);
     }
     
+    [HttpGet]
+    public async Task<ActionResult<LoggedInUserResponseDto>> GetLoggedInUser()
+    {
+        var result = await _mediator.Send(new GetUserInfoCommand.Request() {});
+        return Ok(result);
+    }
+    
     private void SetTokenCookie(string token, bool isRefreshToken = false)
     {
         var cookieOption = new CookieOptions()

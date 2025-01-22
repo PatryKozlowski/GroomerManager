@@ -29,6 +29,10 @@
         v-for="(salon, index) in salonStore.salons"
         :key="salon.name"
         class="gap-2 p-2"
+        :class="{
+          'bg-violet-500 text-white': salon.name === activeSalon.name,
+          'hover:bg-gray-100': salon.name !== activeSalon.name,
+        }"
         @click="setActiveSalon(salon)"
       >
         <div class="flex size-6 items-center justify-center">
@@ -39,14 +43,15 @@
         {{ salon.name }}
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem class="gap-2 p-2">
-        <div
+      <!-- <DropdownMenuItem class="gap-2 p-2"> -->
+      <!-- <div
           class="flex size-6 items-center justify-center rounded-md border bg-background"
         >
           <Plus class="size-4" />
         </div>
-        <div class="font-medium text-muted-foreground">Dodaj nowy salon</div>
-      </DropdownMenuItem>
+        <div class="font-medium text-muted-foreground">Dodaj nowy salon</div> -->
+      <AddNewSalon />
+      <!-- </DropdownMenuItem> -->
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

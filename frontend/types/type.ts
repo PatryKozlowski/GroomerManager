@@ -25,4 +25,16 @@ export interface AddSalonForm {
 export interface AddSalonResponse {
   salonId: string;
   logoPath: string;
+  name: string;
+}
+
+export type Role = "Owner" | "Employee";
+
+export interface LoggedInUser {
+  id: string;
+  email: string;
+  role: Role;
+  firstName: string;
+  lastName: string;
+  initials: string;
 }

@@ -5,7 +5,7 @@
       v-slot="{ meta, values, validate }"
       as=""
       keep-values
-      :validation-schema="toTypedSchema(addSalonFormSchema[stepIndex - 1])"
+      :validation-schema="toTypedSchema(addFirstSalonFormSchema[stepIndex - 1])"
     >
       <Stepper
         v-slot="{ isNextDisabled, isPrevDisabled, nextStep, prevStep }"
@@ -103,7 +103,7 @@
                   <FormControl>
                     <Input
                       type="file"
-                      @change="(event: any) => setValue(event.target.files[0] || undefined)"
+                      @change="setValue($event.target.files[0] || undefined)"
                       accept="image/png"
                     />
                   </FormControl>
@@ -160,6 +160,7 @@ definePageMeta({
 });
 
 const salonStore = useSalonStore();
+
 const stepIndex = ref(1);
 const steps = [
   {
@@ -178,15 +179,6 @@ async function onSubmit(values: AddSalonForm) {
   const formData = new FormData();
   formData.append("name", values.name);
   formData.append("logo", values.logo);
-
-  if (!values.logo) {
-    console.error("Brak pliku logo!");
-    return;
-  }
-
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
-  }
 
   await salonStore.addNewSalon(formData);
 }

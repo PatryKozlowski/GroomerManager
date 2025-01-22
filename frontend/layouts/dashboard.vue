@@ -5,8 +5,8 @@
     <div class="hidden border-r bg-muted/40 md:block">
       <div class="flex h-full max-h-screen flex-col gap-2">
         <div class="flex h-14 items-center border-b lg:h-[60px]">
-          <SalonLogo v-if="salonStore.salons.length === 1" />
-          <DropdownSalon v-else />
+          <DropdownSalon v-if="userStore.user?.role === 'Owner'" />
+          <SalonLogo v-else />
         </div>
         <div class="flex-1">
           <Nav :links="navLinks" />
@@ -43,5 +43,5 @@ const navLinks = [
 
 const route = useRoute();
 
-const salonStore = useSalonStore();
+const userStore = useUserStore();
 </script>
