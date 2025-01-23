@@ -38,3 +38,51 @@ export interface LoggedInUser {
   lastName: string;
   initials: string;
 }
+
+export interface Client {
+  id: number;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string | null;
+}
+
+export interface ClientsResponse {
+  clients: Client[];
+  totalCount: number;
+  pageCount: number;
+}
+
+export interface ClientResponse {
+  name: string;
+  phone: string;
+  email: string | null;
+  notes: NotesResponse[];
+}
+
+export interface NotesResponse {
+  id: number;
+  text: string;
+  createdBy: string;
+  created: string;
+}
+
+export interface AddNewNote {
+  clientId: number;
+  text: string;
+}
+
+export type AddNoteForm = Pick<AddNewNote, "text">;
+
+export interface AddNewClientResponse {
+  clientId: number;
+}
+
+export interface AddNewClient {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string | null;
+}
+
+export type EditClient = AddNewClient;

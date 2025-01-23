@@ -24,9 +24,6 @@
         </div>
       </header>
       <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-        <div class="flex items-center">
-          <h1 class="text-lg font-semibold md:text-2xl">{{ route.name }}</h1>
-        </div>
         <slot />
       </main>
     </div>
@@ -38,10 +35,20 @@ import { Home, Users } from "lucide-vue-next";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/clients", label: "Klienci", icon: Users },
+  { href: "/dashboard/clients", label: "Klienci", icon: Users },
 ];
 
-const route = useRoute();
-
 const userStore = useUserStore();
+
+const salonStore = useSalonStore();
+const router = useRouter();
+
+onMounted(() => {
+  router.push({
+    query: {
+      ...router.currentRoute.value.query,
+      salonId: salonStore.activeSalonId,
+    },
+  });
+});
 </script>

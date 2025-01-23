@@ -6,6 +6,7 @@ export const useSalonStore = defineStore("salonStore", {
     salons: [] as Salon[],
     isLoading: false,
     activeSalonId: null as string | null,
+    activeSalonName: null as string | null,
   }),
   persist: {
     storage: piniaPluginPersistedstate.localStorage(),
@@ -19,6 +20,8 @@ export const useSalonStore = defineStore("salonStore", {
         .then((response) => {
           const data = response.data.value as SalonsResponse;
           this.salons = data;
+          this.activeSalonId = data[0]?.id;
+          this.activeSalonName = data[0]?.name;
           if (data.length !== 0) {
             navigateTo("/dashboard");
           } else {
@@ -59,6 +62,7 @@ export const useSalonStore = defineStore("salonStore", {
     clearSalonState() {
       this.salons = [];
       this.activeSalonId = null;
+      this.activeSalonName = null;
     },
   },
 });

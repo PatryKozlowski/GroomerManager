@@ -19,7 +19,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
 
     if (!isEmptySalons) {
-      return router.push("/dashboard");
+      return router.push({
+        path: "/dashboard",
+        query: {
+          ...router.currentRoute.value.query,
+          salonId: salonStore.activeSalonId,
+        },
+      });
     }
   }
 

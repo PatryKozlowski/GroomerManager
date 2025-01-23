@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using GroomerManager.Application.Common.Interfaces;
 using GroomerManager.Domain.Common;
 using GroomerManager.Domain.Entities;
@@ -19,6 +20,27 @@ public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // modelBuilder.Entity<User>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<Role>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<RefreshToken>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<Client>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<ClientNote>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<Salon>().HasQueryFilter(e => e.StatusId == 1);
+        // modelBuilder.Entity<UserSalon>().HasQueryFilter(e => e.StatusId == 1);
+        
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var property = Expression.Property(parameter, nameof(BaseEntity.StatusId));
+                var condition = Expression.Equal(property, Expression.Constant(1));
+                var lambda = Expression.Lambda(condition, parameter);
+
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+            }
+        }
+        
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(GroomerManagerDbContext).Assembly);
     }
 
@@ -60,4 +82,5 @@ public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
         }
         return base.SaveChangesAsync(cancellationToken);
     }
+    
 }

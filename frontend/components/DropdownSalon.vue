@@ -1,9 +1,9 @@
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger
-      class="w-full h-full hover:bg-muted transition-all flex justify-center items-center p-4"
+      class="w-full h-full hover:bg-muted transition-all flex justify-center items-center"
     >
-      <div class="w-full flex items-center gap-4">
+      <div class="w-full flex items-center lg:gap-4 gap-2 lg:ml-4 ml-2">
         <Avatar class="h-10 w-10 rounded-full">
           <img
             :src="activeSalon.logoPath"
@@ -11,9 +11,11 @@
             class="border rounded-full"
           />
         </Avatar>
-        <span class="truncate font-semibold">{{ activeSalon.name }}</span>
+        <span class="truncate">{{ activeSalon.name }}</span>
       </div>
-      <ChevronsUpDown class="mr-4" />
+      <div class="flex w-full justify-end">
+        <ChevronsUpDown class="mr-1" />
+      </div>
     </DropdownMenuTrigger>
     <DropdownMenuContent
       class="min-w-56 rounded-lg"
@@ -43,20 +45,12 @@
         {{ salon.name }}
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <!-- <DropdownMenuItem class="gap-2 p-2"> -->
-      <!-- <div
-          class="flex size-6 items-center justify-center rounded-md border bg-background"
-        >
-          <Plus class="size-4" />
-        </div>
-        <div class="font-medium text-muted-foreground">Dodaj nowy salon</div> -->
       <AddNewSalon />
-      <!-- </DropdownMenuItem> -->
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
 <script setup lang="ts">
-import { ChevronsUpDown, Plus } from "lucide-vue-next";
+import { ChevronsUpDown } from "lucide-vue-next";
 
 const salonStore = useSalonStore();
 
@@ -65,5 +59,15 @@ const activeSalon = ref(salonStore.salons[0]);
 function setActiveSalon(salon: (typeof salonStore.salons)[number]) {
   activeSalon.value = salon;
   salonStore.activeSalonId = activeSalon.value.id;
+  salonStore.activeSalonName = activeSalon.value.name;
 }
+
+onMounted(() => {
+  if (salonStore.activeSalonId) {
+    activeSalon.value =
+      salonStore.salons.find(
+        (salon) => salon.id === salonStore.activeSalonId
+      ) || salonStore.salons[0];
+  }
+});
 </script>
