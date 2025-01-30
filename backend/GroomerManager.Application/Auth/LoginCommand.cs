@@ -68,7 +68,8 @@ public abstract class LoginCommand
                     var newToken = new RefreshToken
                     {
                         UserId = user.Id,
-                        Token = refreshToken
+                        Token = refreshToken,
+                        User = user
                     };
                     _groomerManagerDb.RefreshTokens.Add(newToken);
                 }

@@ -5,8 +5,8 @@ namespace GroomerManager.Domain.Entities;
 public class UserSalon : BaseEntity
 {
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public required User User { get; set; }
     public Guid SalonId { get; set; }
-    public Salon Salon { get; set; } = null!;
-    public string Role { get; set; } = null!;
+    public required Salon Salon { get; set; } 
+    public required string Role { get; set; }
 }

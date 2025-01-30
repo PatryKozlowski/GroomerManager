@@ -39,9 +39,45 @@ public class ClientController :  BaseController
         return Ok(result);
     }
     
-
+    [HttpPut]
+    public async Task<ActionResult<MessageResponseDto>> EditClient([FromQuery] Guid salonId, [FromBody] EditClientRequestDto dto)
+    {
+        var request = new EditClientCommand.Request
+        {
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            PhoneNumber = dto.PhoneNumber,
+            Email = dto.Email,
+            SalonId = salonId,
+            Id = dto.Id,
+        };
+        
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    
+    [HttpDelete]
+    public async Task<ActionResult<MessageResponseDto>> DeleteClient([FromQuery] Guid salonId, Guid clientId)
+    {
+        var request = new DeleteClientCommand.Request
+        {
+            SalonId = salonId,
+            ClientId = clientId,
+        };
+        
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    
     [HttpGet]
     public async Task<ActionResult<List<ClientsResponseDto>>> GetClients([FromQuery] GetClientsCommand.Request request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<ClientResponseDto>> GetClient([FromQuery] GetClientCommand.Request request)
     {
         var result = await _mediator.Send(request);
         return Ok(result);

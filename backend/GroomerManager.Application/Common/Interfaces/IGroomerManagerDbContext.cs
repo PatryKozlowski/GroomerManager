@@ -12,5 +12,6 @@ public interface IGroomerManagerDbContext
     DbSet<ClientNote> ClientNotes { get; set; }
     DbSet<Domain.Entities.Salon> Salons { get; set; }
     DbSet<UserSalon> UserSalons { get; set; }
+    DbSet<UserInfo> UsersInfo { get; set; }
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

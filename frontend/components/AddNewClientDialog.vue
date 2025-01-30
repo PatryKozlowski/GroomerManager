@@ -94,37 +94,14 @@
 </template>
 
 <script setup lang="ts">
-import { toTypedSchema } from "@vee-validate/zod";
 import { PlusCircle, Save } from "lucide-vue-next";
 import { useForm } from "vee-validate";
-import * as z from "zod";
 import type { AddNewClient } from "~/types/type";
 
 const { open } = useDialogHelper();
 
-const formSchema = toTypedSchema(
-  z.object({
-    firstName: z
-      .string({ message: "Imię jest wymagane" })
-      .min(1, { message: "Imię musi mieć co najmniej 2 znaki" })
-      .max(50, { message: "Imię nie może mieć więcej niż 50 znaków" }),
-    lastName: z
-      .string({ message: "Nazwisko jest wymagane" })
-      .min(2, { message: "Nazwisko musi mieć co najmniej 2 znaki" })
-      .max(50, { message: "Nazwisko nie może mieć więcej niż 50 znaków" }),
-    phoneNumber: z
-      .string({ message: "Numer telefonu jest wymagane" })
-      .min(9, { message: "Numer telefonu musi mieć co najmniej 9 cyfry" })
-      .max(9, { message: "Numer telefonu nie może mieć więcej niż 9 cyfr" }),
-    email: z
-      .string()
-      .email({ message: "Podaj poprawny adres email" })
-      .optional(),
-  })
-);
-
 const form = useForm<AddNewClient>({
-  validationSchema: formSchema,
+  validationSchema: addNewClientSchema,
 });
 
 const clientsStore = useClientsStore();

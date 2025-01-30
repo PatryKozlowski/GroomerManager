@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
     "pinia-plugin-persistedstate/nuxt",
+    "dayjs-nuxt",
   ],
   imports: {
     dirs: ["types"],

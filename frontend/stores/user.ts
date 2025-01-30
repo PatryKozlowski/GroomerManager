@@ -1,6 +1,3 @@
-import { useToast } from "@/components/ui/toast/use-toast";
-import type { Salon, SalonsResponse } from "~/types/type";
-
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     user: null as LoggedInUser | null,

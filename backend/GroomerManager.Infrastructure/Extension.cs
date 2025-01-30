@@ -13,7 +13,7 @@ public static class Extension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDatabaseConfiguration(configuration.GetConnectionString("GroomerManagerStore")!);
+        services.AddDatabaseConfiguration(configuration.GetConnectionString("GroomerManagerStoreAzure")!);
         services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("BlobStorage")));
         services.AddTransient<IDateTime, DataTimeService>();
         services.AddJwt(configuration);

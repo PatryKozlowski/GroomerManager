@@ -12,10 +12,12 @@ public class UserSalonConfiguration: IEntityTypeConfiguration<UserSalon>
 
         builder.HasOne(us => us.User)
             .WithMany(u => u.UserSalons)
-            .HasForeignKey(us => us.UserId);
+            .HasForeignKey(us => us.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(us => us.Salon)
             .WithMany(s => s.UserSalons)
-            .HasForeignKey(us => us.SalonId);
+            .HasForeignKey(us => us.SalonId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

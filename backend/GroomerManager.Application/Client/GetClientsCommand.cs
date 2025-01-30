@@ -1,85 +1,3 @@
-// using GroomerManager.Application.Common.Abstraction;
-// using GroomerManager.Application.Common.Interfaces;
-// using GroomerManager.Domain.DTOs;
-// using MediatR;
-// using Microsoft.EntityFrameworkCore;
-//
-// namespace GroomerManager.Application.Client;
-//
-// public abstract class GetClientsCommand
-// {
-//     public class Request : IRequest<ClientsResponseDto>
-//     {
-//         public Guid salonId { get; set; }
-//         public int page { get; set; } = 0;
-//         public int pageSize { get; set; } = 10;
-//         public string? search { get; set; }
-//     }
-//
-//     public class Handler : BaseCommandHandler, IRequestHandler<Request, ClientsResponseDto>
-//     {
-//         private readonly IGroomerManagerDbContext _groomerManagerDb;
-//         private readonly ICurrentSalonProvider _currentSalonProvider ;
-//
-//         public Handler(IGroomerManagerDbContext groomerManagerDb, ICurrentSalonProvider currentSalonProvider) : base(groomerManagerDb, currentSalonProvider)
-//         {
-//             _groomerManagerDb = groomerManagerDb;
-//             _currentSalonProvider = currentSalonProvider;
-//         }
-//
-//         public async Task<ClientsResponseDto> Handle(Request request, CancellationToken cancellationToken)
-//         {
-//             var salon = await _currentSalonProvider.GetAuthenticatedSalon(request.salonId);
-//                 
-//          
-//             var clients = await _groomerManagerDb.Clients
-//                 .Where(c => c.SalonId == salon.Id)
-//                 .OrderBy(c => c.Created)
-//                 .Include(c => c.Notes)
-//                 .ToListAsync(cancellationToken);
-//             
-//             var totalCount = await _groomerManagerDb.Clients
-//                 .Where(c => c.SalonId == salon.Id)
-//                 .CountAsync(cancellationToken);
-//             
-//             if (!string.IsNullOrEmpty(request.search))
-//             {
-//                 string searchLower = request.search.ToLower();
-//                 clients = clients
-//                     .Where(
-//                         c => c.FirstName.ToLower().Contains(searchLower)
-//                              || c.LastName.ToLower().Contains(searchLower)
-//                              || c.PhoneNumber.ToLower().Contains(searchLower))
-//                     .ToList();
-//                 totalCount = clients.Count;
-//             }
-//             else
-//             {
-//                 clients = clients
-//                     .Skip(request.page * request.pageSize)
-//                     .Take(request.pageSize)
-//                     .ToList();
-//             }
-//
-//             var clientsDto = clients.Select(c => new ClientsDto
-//             {
-//                 Id = c.Id,
-//                 FirstName = c.FirstName,
-//                 LastName = c.LastName,
-//                 PhoneNumber = c.PhoneNumber,
-//                 Email = c.Email,
-//             });
-//             
-//             return new ClientsResponseDto
-//             {
-//                 Clients = clientsDto.ToList(),
-//                 TotalCount = totalCount,
-//                 PageCount = (int)Math.Ceiling((double)totalCount / request.pageSize)
-//             };
-//         }
-//     }
-// }
-
 using GroomerManager.Application.Common.Abstraction;
 using GroomerManager.Application.Common.Interfaces;
 using GroomerManager.Domain.DTOs;
@@ -126,7 +44,7 @@ public abstract class GetClientsCommand
 
             var clientsDto = await ApplyPagination(query, request.Page, request.PageSize)
                 .OrderBy(c => c.Created)
-                .Select(c => new ClientsDto
+                .Select(c => new ClientResponseDto()
                 {
                     Id = c.Id,
                     FirstName = c.FirstName,

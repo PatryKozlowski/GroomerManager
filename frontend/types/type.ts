@@ -34,15 +34,19 @@ export interface LoggedInUser {
   id: string;
   email: string;
   role: Role;
-  firstName: string;
-  lastName: string;
-  initials: string;
+  fullName: string;
 }
 
 export interface Client {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
+  email: string | null;
+}
+
+export interface ClientDetails {
+  name: string;
   phoneNumber: string;
   email: string | null;
 }
@@ -54,28 +58,30 @@ export interface ClientsResponse {
 }
 
 export interface ClientResponse {
-  name: string;
-  phone: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   email: string | null;
-  notes: NotesResponse[];
 }
 
-export interface NotesResponse {
-  id: number;
+export interface Note {
+  id: string;
   text: string;
-  createdBy: string;
   created: string;
+  createdBy: string;
 }
+
+export type NotesResponse = Note;
+
+export type Notes = NotesResponse[];
 
 export interface AddNewNote {
-  clientId: number;
-  text: string;
+  // clientId: string;
+  note: string;
 }
 
-export type AddNoteForm = Pick<AddNewNote, "text">;
-
 export interface AddNewClientResponse {
-  clientId: number;
+  clientId: string;
 }
 
 export interface AddNewClient {
@@ -85,4 +91,12 @@ export interface AddNewClient {
   email: string | null;
 }
 
-export type EditClient = AddNewClient;
+export interface MessageResponse {
+  message: string;
+}
+
+export interface EditClient extends AddNewClient {
+  id: string;
+}
+
+export type EditClientResponse = AddNewClientResponse;

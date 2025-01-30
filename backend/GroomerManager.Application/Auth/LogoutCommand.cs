@@ -9,14 +9,14 @@ namespace GroomerManager.Application.Auth;
 
 public abstract class LogoutCommand
 {
-    public class Request : IRequest<LogoutResponseDto>
+    public class Request : IRequest<MessageResponseDto>
     {
     }
     
     
     public class Handler : 
         BaseCommandHandler, 
-        IRequestHandler<Request, LogoutResponseDto>
+        IRequestHandler<Request, MessageResponseDto>
     {
         private readonly IGroomerManagerDbContext _groomerManagerDb;
         private readonly IAuthenticationDataProvider _authenticationDataProvider;
@@ -27,7 +27,7 @@ public abstract class LogoutCommand
             _authenticationDataProvider = authenticationDataProvider;
         }
 
-        public async Task<LogoutResponseDto> Handle(Request request, CancellationToken cancellationToken)
+        public async Task<MessageResponseDto> Handle(Request request, CancellationToken cancellationToken)
         {
             var userId = _authenticationDataProvider.GetUserId();
 
@@ -36,7 +36,7 @@ public abstract class LogoutCommand
                 throw new UnauthorizedException();
             }
             
-            return new LogoutResponseDto
+            return new MessageResponseDto
             {
                 Message = "LogoutSuccessful"
             };

@@ -6,5 +6,5 @@ public class ClientNote : BaseEntity
 {
     public required string Text { get; set; }
     public Guid ClientId { get; set; }
-    public Client Client { get; set; } = null!;
+    public required Client Client { get; set; }
 }

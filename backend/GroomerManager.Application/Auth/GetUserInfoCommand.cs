@@ -1,4 +1,3 @@
-using FluentValidation;
 using GroomerManager.Application.Common.Exceptions;
 using GroomerManager.Application.Common.Interfaces;
 using GroomerManager.Domain.DTOs;
@@ -38,6 +37,7 @@ public abstract class GetUserInfoCommand
 
             var user = await _groomerManagerDb.Users
                 .Include(u => u.Role)
+                .Include(u => u.UserInfo)
                 .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
             
             if (user == null)
@@ -45,26 +45,14 @@ public abstract class GetUserInfoCommand
                 throw new ErrorException("UserNotFound");
             }
             
-            if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName))
-            {
-                throw new ErrorException("InvalidUserName");
-            }
-
-            var userInitials = $"{char.ToUpper(user.FirstName[0])}{char.ToUpper(user.LastName[0])}";
 
             return new LoggedInUserResponseDto
             {
                 Id = user.Id,
                 Email = user.Email,
                 Role = user.Role.Name,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Initials = userInitials
+                FullName = user.UserInfo.UserName.ToString()
             };
         }
-    }
-
-    public class Validator : AbstractValidator<Request>
-    {
     }
 }

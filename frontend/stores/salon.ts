@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/toast/use-toast";
-import type { AddSalonForm, Salon, SalonsResponse } from "~/types/type";
+import type { Salon, SalonsResponse } from "~/types/type";
 
 export const useSalonStore = defineStore("salonStore", {
   state: () => ({
@@ -34,6 +34,7 @@ export const useSalonStore = defineStore("salonStore", {
     },
     async addNewSalon(values: FormData, onSuccess: () => void = () => {}) {
       const { toast } = useToast();
+      const router = useRouter();
       this.isLoading = true;
       useApi("/api/Salon/CreateSalon", {
         method: "POST",
@@ -51,7 +52,13 @@ export const useSalonStore = defineStore("salonStore", {
               variant: "success",
               description: "Pomyślnie dodano salon",
             });
-            navigateTo("/dashboard");
+            router.push({
+              path: "/dashboard/clients",
+              query: {
+                ...router.currentRoute.value.query,
+                salonId: data.salonId,
+              },
+            });
             onSuccess();
           }
         })

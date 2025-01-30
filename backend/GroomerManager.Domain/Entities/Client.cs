@@ -9,6 +9,6 @@ public class Client : BaseEntity
     public required string PhoneNumber { get; set; }
     public string? Email { get; set; }
     public Guid SalonId { get; set; }
-    public Salon Salon { get; set; } = null!;
-    public ICollection<ClientNote> Notes { get; set; }
+    public  required Salon Salon { get; set; }
+    public ICollection<ClientNote> Notes { get; private set; } = new List<ClientNote>();
 }

@@ -1,6 +1,6 @@
 import { h } from "vue";
 import type { ColumnDef } from "@tanstack/vue-table";
-import type { Client, ClientsResponse } from "~/types/type";
+import type { Client } from "~/types/type";
 import DataTableDropDown from "./DataTableDropDown.vue";
 
 export const columns: ColumnDef<Client>[] = [

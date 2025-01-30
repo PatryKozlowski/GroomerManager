@@ -34,7 +34,6 @@ watch(
           salonId: newSalonId,
         },
       });
-      console.log("salonId changed");
     }
   }
 );

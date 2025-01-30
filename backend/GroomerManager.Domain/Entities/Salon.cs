@@ -10,6 +10,6 @@ public class Salon : BaseEntity
     public string? Address { get; set; }
     public Guid OwnerId { get; set; }
     public User Owner { get; set; } = null!;
-    public ICollection<UserSalon> UserSalons { get; set; } = null!;
-    public ICollection<Client> Clients { get; set; } = new List<Client>();
+    public ICollection<UserSalon> UserSalons { get; private set; } = new List<UserSalon>();
+    public ICollection<Client> Clients { get; private set; } = new List<Client>();
 } 

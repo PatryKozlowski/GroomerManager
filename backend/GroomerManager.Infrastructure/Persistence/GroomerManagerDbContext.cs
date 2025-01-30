@@ -20,14 +20,6 @@ public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.Entity<User>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<Role>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<RefreshToken>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<Client>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<ClientNote>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<Salon>().HasQueryFilter(e => e.StatusId == 1);
-        // modelBuilder.Entity<UserSalon>().HasQueryFilter(e => e.StatusId == 1);
-        
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
             if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
@@ -51,6 +43,7 @@ public class GroomerManagerDbContext : DbContext, IGroomerManagerDbContext
     public DbSet<ClientNote> ClientNotes { get; set; }
     public DbSet<Salon> Salons { get; set; }
     public DbSet<UserSalon> UserSalons { get; set; }
+    public DbSet<UserInfo> UsersInfo { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

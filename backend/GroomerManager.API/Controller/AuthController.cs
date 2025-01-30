@@ -49,7 +49,7 @@ public class AuthController: BaseController
     }
     
     [HttpGet]
-    public async Task<ActionResult<LogoutResponseDto>> Logout()
+    public async Task<ActionResult<MessageResponseDto>> Logout()
     {
         var logoutResult = await _mediator.Send(new LogoutCommand.Request());
         DeleteTokenCookie();

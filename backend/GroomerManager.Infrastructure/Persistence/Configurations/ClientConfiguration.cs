@@ -10,7 +10,6 @@ public class ClientConfiguration : IEntityTypeConfiguration<Client>
     {
         builder.HasOne(c => c.Salon)
             .WithMany(s => s.Clients)
-            .HasForeignKey(c => c.SalonId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .HasForeignKey(c => c.SalonId);
     }
 }

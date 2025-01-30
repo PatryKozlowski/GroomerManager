@@ -78,7 +78,9 @@ public abstract class CreateSalonCommand
             {
                 UserId = user.Id,
                 SalonId = newSalon.Id,
-                Role = user.Role.Name
+                Role = user.Role.Name,
+                User = user,
+                Salon = newSalon
             };
 
             _groomerManagerDb.UserSalons.Add(userSalon);

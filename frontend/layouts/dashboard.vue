@@ -23,7 +23,9 @@
           <UserButton />
         </div>
       </header>
-      <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+      <main
+        class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 overflow-auto"
+      >
         <slot />
       </main>
     </div>
@@ -33,15 +35,15 @@
 <script setup lang="ts">
 import { Home, Users } from "lucide-vue-next";
 
-const navLinks = [
-  { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/dashboard/clients", label: "Klienci", icon: Users },
-];
-
 const userStore = useUserStore();
 
 const salonStore = useSalonStore();
 const router = useRouter();
+
+const navLinks = [
+  { href: `/dashboard?salonId=${salonStore.activeSalonId}`, label: "Dashboard", icon: Home },
+  { href: `/dashboard/clients?salonId=${salonStore.activeSalonId}`, label: "Klienci", icon: Users },
+];
 
 onMounted(() => {
   router.push({
